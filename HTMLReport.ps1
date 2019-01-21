@@ -993,7 +993,7 @@ Foreach ($User in $AllUsers)
     $UserLicenses = ($user | Select -ExpandProperty AssignedLicenses).SkuID
 	If (($UserLicenses).count -gt 1)
 	{
-	$LastLogon = Get-MailboxStatistics $User.DisplayName | Select-Object -ExpandProperty LastLogonTime
+	$LastLogon = Get-MailboxStatistics $User.UserPrincipalName | Select-Object -ExpandProperty LastLogonTime
 		Foreach ($UserLicense in $UserLicenses)
 		{
             $UserLicense = ($licenses | Where-Object { $_.skuid -match $UserLicense }).SkuPartNumber
@@ -1017,7 +1017,7 @@ Foreach ($User in $AllUsers)
 	}
 	Elseif (($UserLicenses).count -eq 1)
 	{
-	$LastLogon = Get-MailboxStatistics $User.DisplayName | Select-Object -ExpandProperty LastLogonTime
+	$LastLogon = Get-MailboxStatistics $User.UserPrincipalName | Select-Object -ExpandProperty LastLogonTime
 		$lic = ($licenses | Where-Object { $_.skuid -match $UserLicenses}).SkuPartNumber
 		$TextLic = $Sku.Item("$lic")
 		If (!($TextLic))
